@@ -1,3 +1,10 @@
+# saved models
+examples/saves/models/
+
+# slurm logs
+*.err
+*.out
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

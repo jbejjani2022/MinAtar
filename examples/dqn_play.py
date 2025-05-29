@@ -3,7 +3,10 @@
 # dqn_play.py – Play MinAtar Breakout with a trained DQN agent and save a GIF of gameplay
 #
 # Example:
-#   python3 dqn_play.py -g breakout -m breakout_data_and_weights -n 20 --delay 30 --gif breakout.gif
+#   python dqn_play.py -g breakout -m breakout_data_and_weights --gif breakout.gif
+#
+#   generates 10 episodes of gameplay using model saved in breakout_data_and_weights and saves a GIF to 
+#   breakout.gif with 0.5s between frames
 ###############################################################################################################
 import argparse
 from pathlib import Path
@@ -147,7 +150,7 @@ if __name__ == "__main__":
         "-m",
         "--model",
         default="breakout_data_and_weights",
-        help="Path to the *_data_and_weights file produced by training",
+        help="Path to the [args.game]_data_and_weights file produced by training",
     )
     parser.add_argument("-n", "--episodes", type=int, default=10, help="Number of episodes")
     parser.add_argument("--delay", type=int, default=0.5, help="Delay between frames in s (for display & GIF)")

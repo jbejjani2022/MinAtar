@@ -13,6 +13,7 @@ install_requires = [
     'scipy>=1.2.1',
     'seaborn>=0.9.0',
     'six>=1.12.0',
+    'imageio>=2.0.0',
 ]
 
 examples_requires = [
