@@ -55,9 +55,9 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 ################################################################################################################
 # class QNetwork
 #
-# One hidden 2D conv with variable number of input channels.  We use 16 filters, a quarter of the original DQN
-# paper of 64.  One hidden fully connected linear layer with a quarter of the original DQN paper of 512
-# rectified units.  Finally, the output layer is a fully connected linear layer with a single output for each
+# One hidden 2D conv with variable number of input channels. We use 16 filters, a quarter of the original DQN
+# paper of 64. One hidden fully connected linear layer with a quarter of the original DQN paper of 512
+# rectified units. Finally, the output layer is a fully connected linear layer with a single output for each
 # valid action.
 #
 ################################################################################################################
@@ -432,8 +432,31 @@ def main():
     load_file_path = None
     if args.loadfile:
         load_file_path = args.loadfile
+    
+    # Set seed for reproducibility
+    seed = 42
 
+    # Seed Python's built-in random
+    random.seed(seed)
+
+    # Seed NumPy's global RNG (used for ε-greedy, etc.)
+    numpy.random.seed(seed)
+
+    # Seed PyTorch CPU RNG
+    torch.manual_seed(seed)
+
+    # Seed PyTorch CUDA RNG (all GPUs)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+
+    # Force PyTorch/CuDNN into deterministic mode
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+    # Create the environment, then seed its RNG
     env = Environment(args.game)
+    env.seed(seed)
 
     print('Cuda available?: ' + str(torch.cuda.is_available()))
     dqn(env, args.replayoff, args.targetoff, file_name, args.save, load_file_path, args.alpha)
@@ -441,5 +464,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-

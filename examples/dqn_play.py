@@ -69,13 +69,13 @@ def build_palette(n_channels: int) -> np.ndarray:
 
 def state_to_rgb(state: np.ndarray, palette: np.ndarray, scale: int = 40) -> np.ndarray:
     """
-    Map MinAtar binary state (10×10×C) to an up-scaled RGB image using
+    Map MinAtar binary state (10x10xC) to an up-scaled RGB image using
     the provided palette.
     """
     has_obj = state.any(axis=2)
     idx = state.argmax(axis=2) + 1       # 1…C
     idx[~has_obj] = 0                    # background
-    rgb_small = palette[idx]             # 10×10×3 uint8
+    rgb_small = palette[idx]             # 10x10x3 uint8
     return np.repeat(np.repeat(rgb_small, scale, axis=0), scale, axis=1)
 
 

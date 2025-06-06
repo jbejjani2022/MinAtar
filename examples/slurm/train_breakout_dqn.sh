@@ -19,3 +19,4 @@ mamba activate MinAtar
 cd ..
 
 python dqn.py -g breakout -v
+python dqn_play.py -g breakout -m breakout_data_and_weights --gif breakout.gif
